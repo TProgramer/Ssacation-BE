@@ -1,8 +1,5 @@
 package com.ssacation.ssacation.oauth;
 
-import java.util.HashMap;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,20 +21,14 @@ public class OAuthController {
    */
   @ResponseBody
   @GetMapping("/kakao")
-  public ResponseEntity<HashMap<String, Object>> kakaoCallback(@RequestParam String code) {
+  public ResponseEntity<Object> kakaoCallback(@RequestParam String code) {
 
-    System.out.println(code);
+    // accessToken 발급받기
     String accessToken = oAuthService.getKakaoAccessToken(code);
-    HashMap<String, Object> userInfo = null;
 
-    try {
+    // userInfo 받아오기
+    Object userInfo = oAuthService.getUserInfo(accessToken);
 
-      userInfo = oAuthService.getUserInfo(accessToken);
-
-    } catch (Throwable e) {
-      
-      e.printStackTrace();
-    }
-    return new ResponseEntity<>(userInfo, HttpStatus.OK);
+    return ResponseEntity.ok(userInfo);
   }
 }
