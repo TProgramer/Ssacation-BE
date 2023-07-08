@@ -38,3 +38,6 @@ out/
 
 ### Secrets file ###
 /src/main/resources/application-oauth.yml
+
+### Terraform provider registry
+.terraform/
